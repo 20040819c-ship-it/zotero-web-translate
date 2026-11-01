@@ -1,0 +1,9 @@
+{
+  "name": "zotero-web-translate-offline",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": { "prepare-model": "node prepare.mjs", "start": "node server.mjs" },
+  "dependencies": { "@huggingface/transformers": "3.8.1" }
+}
