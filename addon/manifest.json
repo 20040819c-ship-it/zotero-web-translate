@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "文译 · Web Translate for Zotero",
+  "version": "0.1.0",
+  "description": "选中文献文字，预览翻译提示词并填入 AI 网页。不需要 API Key。",
+  "author": "20040819c-ship-it",
+  "applications": {
+    "zotero": {
+      "id": "web-translate-for-zotero@20040819c-ship-it",
+      "update_url": "https://raw.githubusercontent.com/20040819c-ship-it/zotero-web-translate/main/updates.json",
+      "strict_min_version": "10.0",
+      "strict_max_version": "10.*"
+    }
+  }
+}
