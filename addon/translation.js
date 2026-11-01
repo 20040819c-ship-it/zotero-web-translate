@@ -2,9 +2,16 @@
 var WebTranslation = {
   providers: {
     chatgpt: { name: "ChatGPT", home: "https://chatgpt.com/", origin: "https://chatgpt.com",
-      selectors: ['#prompt-textarea', '[contenteditable="true"][role="textbox"]'] },
+      selectors: ['#prompt-textarea', '[contenteditable="true"][role="textbox"]'],
+      send: 'button[data-testid="send-button"], button[aria-label="Send prompt"], button[aria-label="发送提示"], button[aria-label="发送消息"]',
+      stop: 'button[data-testid="stop-button"], button[aria-label="Stop generating"], button[aria-label="停止生成"]',
+      user: '[data-message-author-role="user"]', assistant: '[data-message-author-role="assistant"]', answer: '.markdown' },
     deepseek: { name: "DeepSeek", home: "https://chat.deepseek.com/", origin: "https://chat.deepseek.com",
-      selectors: ['textarea#chat-input', 'textarea[placeholder]'] }
+      selectors: ['textarea#chat-input', 'textarea[placeholder]'],
+      send: 'button[aria-label="Send"], button[aria-label="发送"], [role="button"][aria-label="发送"], button[type="submit"]',
+      stop: 'button[aria-label="Stop generating"], button[aria-label="停止生成"], button[aria-label="停止回答"], .ds-stop-button',
+      user: '[data-message-author-role="user"], .ds-user-message, .fbb737a4',
+      assistant: '[data-message-author-role="assistant"], .ds-assistant-message-main-content', answer: '.ds-markdown' }
   },
   prompt(text, mode) {
     text = String(text || "").trim();
@@ -21,7 +28,7 @@ var WebTranslation = {
   noteHTML(source, translation, provider) {
     const e = this.escapeHTML;
     return '<h1>文献翻译笔记</h1><p>服务：' + e(provider) + '</p><h2>原文</h2><p>'
-      + e(source).replace(/\n/g, '<br>') + '</p><h2>译文（用户粘贴）</h2><p>'
+      + e(source).replace(/\n/g, '<br>') + '</p><h2>译文</h2><p>'
       + e(translation).replace(/\n/g, '<br>') + '</p>';
   }
 };

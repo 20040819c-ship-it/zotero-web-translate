@@ -1,5 +1,6 @@
 /* Runs only in the embedded browser. Does not submit, read answers or credentials. */
-function fillTranslationFrame(channel, request) {
+function fillTranslationFrame(channel, request, reply = null) {
+  const respond = data => reply ? reply(data) : sendAsyncMessage(channel,data);
   try {
     const doc = content.document;
     if (doc.location.origin !== request.origin) throw new Error("网站已切换或正在登录，请回到所选 AI 网站后重试。");
@@ -16,6 +17,8 @@ function fillTranslationFrame(channel, request) {
     const editor = editors[0];
     const text = editor.tagName.toLowerCase() === 'textarea' ? editor.value : editor.textContent;
     if (String(text || '').trim()) throw new Error("网页输入框里已有内容。请先发送或清空，插件不会覆盖草稿。");
+    // In auto mode, avoid taking keyboard focus away from the PDF selection.
+    const oldFocus = doc.activeElement;
     editor.focus();
     if (editor.tagName.toLowerCase() === 'textarea') {
       // Use the page realm's native setter so controlled inputs receive the update.
@@ -33,9 +36,10 @@ function fillTranslationFrame(channel, request) {
     const actual = editor.tagName.toLowerCase() === 'textarea' ? editor.value : editor.textContent;
     const compact = value => String(value || '').replace(/\s/g, '');
     if (compact(actual) !== compact(request.prompt)) throw new Error("填入结果未通过检查，请使用复制提示词。");
-    sendAsyncMessage(channel, {ok: true});
+    if (request.automatic && oldFocus && oldFocus !== editor) oldFocus.focus();
+    respond({ok: true});
   } catch (error) {
-    sendAsyncMessage(channel, {ok: false, error: error.message || String(error)});
+    respond({ok: false, error: error.message || String(error)});
   }
 }
 if (typeof module !== "undefined") module.exports = fillTranslationFrame;

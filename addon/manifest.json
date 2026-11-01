@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "文译 · Web Translate for Zotero",
-  "version": "0.1.0",
-  "description": "选中文献文字，预览翻译提示词并填入 AI 网页。不需要 API Key。",
+  "version": "0.3.0",
+  "description": "选中即翻译：普通在线、本地离线和 AI 网页三种模式。",
   "author": "20040819c-ship-it",
   "applications": {
     "zotero": {
